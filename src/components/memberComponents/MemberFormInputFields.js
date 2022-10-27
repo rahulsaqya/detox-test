@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
-import { Text } from 'react-native-elements';
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, TextInput } from "react-native";
+import { Text } from "react-native-elements";
 
 const MemberFormInputFields = ({
   labelAndPlaceholder,
@@ -10,6 +10,7 @@ const MemberFormInputFields = ({
   isFailingValidation,
   errorMessage,
   isInError,
+  formTestId,
 }) => {
   const [isErrorState, setIsErrorState] = useState(isInError);
 
@@ -19,7 +20,7 @@ const MemberFormInputFields = ({
 
   const handleFocus = () => {
     if (isErrorState) {
-      inputChangeText('');
+      inputChangeText("");
       setIsErrorState(false);
     }
   };
@@ -31,8 +32,10 @@ const MemberFormInputFields = ({
   };
 
   return (
-    <View pointerEvents={editableStatus ? 'auto' : 'none'}>
-      <Text style={styles.label}>{labelAndPlaceholder}:</Text>
+    <View pointerEvents={editableStatus ? "auto" : "none"}>
+      <Text style={styles.label} testID={`formLabel-${formTestId}`}>
+        {labelAndPlaceholder}:
+      </Text>
       <TextInput
         style={[styles.input, isErrorState ? styles.inputError : {}]}
         placeholder={labelAndPlaceholder}
@@ -42,6 +45,7 @@ const MemberFormInputFields = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         autoCorrect={false}
+        testID={`formInput-${formTestId}`}
       />
     </View>
   );
@@ -57,13 +61,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderWidth: 1,
     marginBottom: 15,
-    borderColor: 'black',
+    borderColor: "black",
     padding: 5,
     margin: 5,
   },
   inputError: {
-    color: 'red',
-    borderColor: 'red',
+    color: "red",
+    borderColor: "red",
   },
 });
 

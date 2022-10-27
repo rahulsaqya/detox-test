@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
-import { Button } from 'react-native-elements';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import MemberFormInputFields from './MemberFormInputFields';
-import moment from 'moment';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { formatDate } from '../../utils/date';
+import React, { useState } from "react";
+import { View } from "react-native";
+import { Button } from "react-native-elements";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import MemberFormInputFields from "./MemberFormInputFields";
+import moment from "moment";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { formatDate } from "../../utils/date";
 
 const presentDate = new Date();
 const yearMinusEighteen = presentDate.getFullYear() - 18;
@@ -13,7 +13,7 @@ const yearMinusOneHundredAndTen = presentDate.getFullYear() - 110;
 const presentMonth = presentDate.getMonth();
 const presentDay = presentDate.getDate();
 
-const maxDate = moment(new Date()).subtract(18, 'years');
+const maxDate = moment(new Date()).subtract(18, "years");
 
 const MemberFormDateFields = ({
   labelAndPlaceholder,
@@ -22,8 +22,9 @@ const MemberFormDateFields = ({
   isFailingValidation,
   errorMessage,
   isInError,
+  formTestId,
 }) => {
-  const [date, setDate] = useState(inputValue || '');
+  const [date, setDate] = useState(inputValue || "");
   const [show, setShow] = useState(false);
   const [pickerDate, setPickerDate] = useState(date || new Date(maxDate));
   const [isError, setIsError] = useState(isInError);
@@ -38,7 +39,7 @@ const MemberFormDateFields = ({
 
   const handleChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setNewDate(Platform.OS === 'ios', currentDate);
+    setNewDate(Platform.OS === "ios", currentDate);
   };
   const handleConfirm = (confirmedDate) => {
     setNewDate(false, confirmedDate);
@@ -64,11 +65,13 @@ const MemberFormDateFields = ({
           isFailingValidation={isFailingValidation}
           errorMessage={errorMessage}
           isInError={isError || isInError}
+          formTestId={formTestId}
         />
       </TouchableOpacity>
       {show && (
         <View>
           <DateTimePicker
+            testID="formDatePicker"
             timeZoneOffsetInMinutes={0}
             value={new Date(pickerDate) || new Date(maxDate)}
             mode="date"
@@ -77,20 +80,23 @@ const MemberFormDateFields = ({
               new Date(yearMinusOneHundredAndTen, presentMonth, presentDay)
             }
             maximumDate={new Date(yearMinusEighteen, presentMonth, presentDay)}
-            display="default"
+            display="spinner"
             onChange={handleChange}
+            testId="formDatePicker"
           />
-          {Platform.OS === 'ios' && (
+          {Platform.OS === "ios" && (
             <View>
               <Button
-                style={{margin: 5}}
+                style={{ margin: 5 }}
                 title="Confirm"
                 onPress={() => handleConfirm(pickerDate)}
+                testID="confirmPickerButton"
               />
               <Button
-                style={{margin: 5}}
+                style={{ margin: 5 }}
                 title="Cancel"
                 onPress={() => handleCancelChange()}
+                testId="cancelPickerButton"
               />
             </View>
           )}

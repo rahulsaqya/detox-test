@@ -1,24 +1,24 @@
-import React, { useState} from 'react';
-import { ScrollView, SafeAreaView} from 'react-native';
-import { Button} from 'react-native-elements';
-import MemberFormInputFields from './MemberFormInputFields';
-import MemberFormDateFields from './MemberFormDateFields';
-import MemberFormTimeFields from './MemberFormTimeFields';
-import MemberFormPickerFields from './MemberFormPickerFields';
-import MemberFormCalendarFields from './MemberFormCalendarFields';
+import React, { useState } from "react";
+import { ScrollView, SafeAreaView } from "react-native";
+import { Button } from "react-native-elements";
+import MemberFormInputFields from "./MemberFormInputFields";
+import MemberFormDateFields from "./MemberFormDateFields";
+import MemberFormTimeFields from "./MemberFormTimeFields";
+import MemberFormPickerFields from "./MemberFormPickerFields";
+import MemberFormCalendarFields from "./MemberFormCalendarFields";
 
 const emailRegex = new RegExp(/^\S+@\S+\.\S+$/);
 
-const MemberForm = ({ onSubmit, initialValues}) => {
+const MemberForm = ({ onSubmit, initialValues }) => {
   const [name, setName] = useState(initialValues.name);
   const [surname, setSurname] = useState(initialValues.surname);
   const [email, setEmail] = useState(initialValues.email);
   const [dateOfBirth, setDateOfBirth] = useState(initialValues.dateOfBirth);
   const [addressLineOne, setAddressLineOne] = useState(
-    initialValues.addressLineOne,
+    initialValues.addressLineOne
   );
   const [addressLineTwo, setAddressLineTwo] = useState(
-    initialValues.addressLineTwo,
+    initialValues.addressLineTwo
   );
   const [city, setCity] = useState(initialValues.city);
   const [postcode, setPostcode] = useState(initialValues.postcode);
@@ -46,7 +46,7 @@ const MemberForm = ({ onSubmit, initialValues}) => {
 
     const errors = Object.keys(valuesToSubmit).filter((key) => {
       // not required
-      if (key === 'addressLineTwo') {
+      if (key === "addressLineTwo") {
         return false;
       }
 
@@ -62,8 +62,8 @@ const MemberForm = ({ onSubmit, initialValues}) => {
   };
 
   return (
-    <ScrollView>
-      <SafeAreaView style={{margin: 5}}>
+    <ScrollView testID="formBackground">
+      <SafeAreaView style={{ margin: 5 }}>
         <MemberFormInputFields
           labelAndPlaceholder="Name"
           inputValue={name}
@@ -71,7 +71,8 @@ const MemberForm = ({ onSubmit, initialValues}) => {
           editableStatus={true}
           isFailingValidation={!name}
           errorMessage="Please enter a valid name"
-          isInError={fieldsOnError.includes('name')}
+          isInError={fieldsOnError.includes("name")}
+          formTestId={"name"}
         />
 
         <MemberFormInputFields
@@ -81,7 +82,8 @@ const MemberForm = ({ onSubmit, initialValues}) => {
           editableStatus={true}
           isFailingValidation={!surname}
           errorMessage="Please enter a valid surname"
-          isInError={fieldsOnError.includes('surname')}
+          isInError={fieldsOnError.includes("surname")}
+          formTestId={"surname"}
         />
         <MemberFormDateFields
           labelAndPlaceholder="Date of Birth"
@@ -89,7 +91,8 @@ const MemberForm = ({ onSubmit, initialValues}) => {
           inputChangeText={setDateOfBirth}
           isFailingValidation={!dateOfBirth}
           errorMessage="Please enter a valid date of birth"
-          isInError={fieldsOnError.includes('dateOfBirth') && !dateOfBirth}
+          isInError={fieldsOnError.includes("dateOfBirth") && !dateOfBirth}
+          formTestId={"dateOfBirth"}
         />
         <MemberFormPickerFields
           labelAndPlaceholder="Start Day"
@@ -98,7 +101,8 @@ const MemberForm = ({ onSubmit, initialValues}) => {
           inputChangeText={setStartDay}
           isFailingValidation={!dateOfBirth}
           errorMessage="Please enter a valid start day"
-          isInError={fieldsOnError.includes('startDay') && !startDay}
+          isInError={fieldsOnError.includes("startDay") && !startDay}
+          formTestId="startDay"
         />
         <MemberFormInputFields
           labelAndPlaceholder="Email"
@@ -107,7 +111,8 @@ const MemberForm = ({ onSubmit, initialValues}) => {
           editableStatus={true}
           isFailingValidation={!emailRegex.test(email)}
           errorMessage="Please enter a valid email"
-          isInError={fieldsOnError.includes('email')}
+          isInError={fieldsOnError.includes("email")}
+          formTestId="email"
         />
         <MemberFormInputFields
           labelAndPlaceholder="Address Line One"
@@ -118,7 +123,8 @@ const MemberForm = ({ onSubmit, initialValues}) => {
           editableStatus={true}
           isFailingValidation={!addressLineOne}
           errorMessage="Address line one is required"
-          isInError={fieldsOnError.includes('addressLineOne')}
+          isInError={fieldsOnError.includes("addressLineOne")}
+          formTestId="addressLineOne"
         />
         <MemberFormInputFields
           labelAndPlaceholder="Address Line Two"
@@ -127,6 +133,7 @@ const MemberForm = ({ onSubmit, initialValues}) => {
             setAddressLineTwo(addressLineTwo)
           }
           editableStatus={true}
+          formTestId="addressLineTwo"
         />
         <MemberFormInputFields
           labelAndPlaceholder="City"
@@ -135,7 +142,8 @@ const MemberForm = ({ onSubmit, initialValues}) => {
           editableStatus={true}
           isFailingValidation={!city}
           errorMessage="City is required"
-          isInError={fieldsOnError.includes('city')}
+          isInError={fieldsOnError.includes("city")}
+          formTestId="city"
         />
         <MemberFormInputFields
           labelAndPlaceholder="Postcode"
@@ -144,7 +152,8 @@ const MemberForm = ({ onSubmit, initialValues}) => {
           editableStatus={true}
           isFailingValidation={!postcode}
           errorMessage="Postcode is required"
-          isInError={fieldsOnError.includes('postcode')}
+          isInError={fieldsOnError.includes("postcode")}
+          formTestId="postcode"
         />
         <MemberFormPickerFields
           labelAndPlaceholder="Country"
@@ -153,7 +162,8 @@ const MemberForm = ({ onSubmit, initialValues}) => {
           listValues="country"
           isFailingValidation={!country}
           errorMessage="Country is required"
-          isInError={fieldsOnError.includes('country') && !country}
+          isInError={fieldsOnError.includes("country") && !country}
+          formTestId="country"
         />
         <MemberFormCalendarFields
           labelAndPlaceholder="Start Date"
@@ -161,7 +171,8 @@ const MemberForm = ({ onSubmit, initialValues}) => {
           inputChangeText={setStartDate}
           isFailingValidation={!startDate}
           errorMessage="Start date is required"
-          isInError={fieldsOnError.includes('startDate') && !startDate}
+          isInError={fieldsOnError.includes("startDate") && !startDate}
+          formTestId="startDate"
         />
         <MemberFormTimeFields
           labelAndPlaceholder="Start Time"
@@ -170,10 +181,15 @@ const MemberForm = ({ onSubmit, initialValues}) => {
           inputChangeText={setStartTime}
           isFailingValidation={!startTime}
           errorMessage="Start time is required"
-          isInError={fieldsOnError.includes('startTime') && !startTime}
+          isInError={fieldsOnError.includes("startTime") && !startTime}
+          formTestId="startTime"
         />
 
-        <Button title="Save Member" onPress={handleSubmit} />
+        <Button
+          title="Save Member"
+          testID="saveMemberButton"
+          onPress={handleSubmit}
+        />
       </SafeAreaView>
     </ScrollView>
   );
@@ -181,17 +197,17 @@ const MemberForm = ({ onSubmit, initialValues}) => {
 
 MemberForm.defaultProps = {
   initialValues: {
-    name: '',
-    surname: '',
-    email: '',
-    dateOfBirth: '',
-    addressLineOne: '',
-    addressLineTwo: '',
-    city: '',
-    postcode: '',
-    country: '',
-    startDate: '',
-    startDay: '',
+    name: "",
+    surname: "",
+    email: "",
+    dateOfBirth: "",
+    addressLineOne: "",
+    addressLineTwo: "",
+    city: "",
+    postcode: "",
+    country: "",
+    startDate: "",
+    startDay: "",
   },
 };
 

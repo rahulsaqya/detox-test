@@ -1,29 +1,45 @@
-import React from 'react';
-import { Text, View, StyleSheet, ScrollView, FlatList, Image } from 'react-native';
-import { europe, usacanada, asia } from '../data/countryData';
+import React from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+  Image,
+} from "react-native";
+import { europe, usacanada, asia } from "../data/countryData";
 
-const ImageComponents = ({title}) => {
+const ImageComponents = ({ title, listTestId }) => {
   const cities =
-    title === 'Europe' ? europe : title === 'Asia' ? asia : usacanada;
+    title === "Europe" ? europe : title === "Asia" ? asia : usacanada;
 
   return (
     <ScrollView>
       <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>{title}</Text>
+        <Text style={styles.headerText} testID={`continentLabel-${listTestId}`}>
+          {title}
+        </Text>
       </View>
       <FlatList
+        testID={`imageBackground-${listTestId}`}
         horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={(city) => city.name}
         data={cities}
-        renderItem={({item}) => {
+        renderItem={({ item, index }) => {
           return (
             <View style={styles.imageContainer}>
-              <Text style={styles.imageText}>{item.name}</Text>
+              <Text
+                style={styles.imageText}
+                testID={`imageTitle-${listTestId}-${index}`}
+              >
+                {item.name}
+              </Text>
               <Image
                 style={styles.image}
-                resizeMode={'cover'}
+                resizeMode={"cover"}
                 source={item.imagePath}
+                testID={`image-${listTestId}-${index}`}
               />
             </View>
           );
@@ -35,16 +51,16 @@ const ImageComponents = ({title}) => {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    backgroundColor: '#F8F8F8',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#F8F8F8",
+    justifyContent: "center",
+    alignItems: "center",
     height: 60,
     paddingTop: 15,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     elevation: 2,
-    position: 'relative',
+    position: "relative",
   },
   headerText: {
     fontSize: 25,
@@ -57,7 +73,7 @@ const styles = StyleSheet.create({
   imageText: {
     fontSize: 20,
     marginBottom: 5,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   image: {
     width: 250,

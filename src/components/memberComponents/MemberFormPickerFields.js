@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import MemberFormInputFields from './MemberFormInputFields';
-import { weekDays, countryList } from '../../data/pickerData';
+import React, { useState } from "react";
+import { View, TouchableOpacity } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import MemberFormInputFields from "./MemberFormInputFields";
+import { weekDays, countryList } from "../../data/pickerData";
 
 const MemberFormPickerFields = ({
   labelAndPlaceholder,
@@ -12,10 +12,11 @@ const MemberFormPickerFields = ({
   isFailingValidation,
   errorMessage,
   isInError,
+  formTestId,
 }) => {
   const [chosenValue, setChosenValue] = useState(inputValue);
   const [show, setShow] = useState(false);
-  const options = listValues === 'week' ? weekDays : countryList;
+  const options = listValues === "week" ? weekDays : countryList;
 
   const updateDay = (day) => {
     inputChangeText(day);
@@ -35,13 +36,16 @@ const MemberFormPickerFields = ({
           isFailingValidation={isFailingValidation}
           errorMessage={errorMessage}
           isInError={isInError}
+          formTestId={formTestId}
         />
       </TouchableOpacity>
       {show && (
-        <View style={{flexDirection: 'column'}}>
+        <View style={{ flexDirection: "column" }}>
           <Picker
             selectedValue={options[0]}
-            onValueChange={handlePickerChange}>
+            onValueChange={handlePickerChange}
+            testID={`formPicker-${formTestId}`}
+          >
             {options.map((item, index) => {
               return <Picker.Item label={item} value={item} key={index} />;
             })}

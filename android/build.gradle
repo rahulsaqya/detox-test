@@ -6,6 +6,7 @@ buildscript {
         minSdkVersion = 21
         compileSdkVersion = 29
         targetSdkVersion = 29
+        ext.kotlinVersion = '1.7.0' // (check what the latest version is!)
     }
     repositories {
         google()
@@ -13,8 +14,23 @@ buildscript {
     }
     dependencies {
         classpath('com.android.tools.build:gradle:4.1.2')
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+    }
+}
+subprojects { 
+    afterEvaluate { subproject ->
+        if((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
+            android {
+                compileSdkVersion rootProject.ext.compileSdkVersion
+                buildToolsVersion rootProject.ext.buildToolsVersion
+                defaultConfig {
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                }
+            }
+        }
     }
 }
 
@@ -33,5 +49,9 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://www.jitpack.io' }
+        maven {
+            //All of Detox' artificats are provided via the npm module
+            url "$rootDir/../node_modules/detox/Detox-android"
+        }
     }
 }

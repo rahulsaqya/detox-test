@@ -5,7 +5,11 @@
   "scripts": {
     "android:build": "react-native run-android",
     "ios:build": "react-native run-ios",
-    "start": "react-native start"
+    "start": "react-native start",
+    "detox:build:ios-debug": "detox build --configuration ios",
+    "detox:e2e:ios-debug": "detox clean-framework-cache && detox build-framework-cache && DETOX_CONFIGURATION=ios DETOX_RECORD_VIDEOS='failing' DETOX_RECORD_LOGS='failing' npx cucumber-js",
+    "detox:build:android-debug": "detox build --configuration android.emu.debug",
+    "detox:e2e:android-debug": "DETOX_CONFIGURATION=android DETOX_RECORD_VIDEOS='failing' DETOX_RECORD_LOGS='failing' npx cucumber-js"
   },
   "dependencies": {
     "@react-native-community/async-storage": "1.12.1",
@@ -15,7 +19,7 @@
     "moment": "2.29.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-native": "0.63.4",
+    "react-native": "0.64.1",
     "react-native-calendars": "1.1266.0",
     "react-native-date-picker": "4.0.0",
     "react-native-elements": "3.4.2",
@@ -32,9 +36,14 @@
   },
   "devDependencies": {
     "@babel/core": "7.15.5",
+    "@babel/register": "^7.18.9",
     "@babel/runtime": "7.15.4",
+    "@cucumber/cucumber": "^8.7.0",
     "@react-native-community/eslint-config": "3.0.1",
     "babel-jest": "27.1.0",
+    "chai": "^4.3.6",
+    "detox": "^19.12.6",
+    "detox-getprops": "^0.1.2",
     "eslint": "7.32.0",
     "jest": "27.1.0",
     "metro-react-native-babel-preset": "0.66.2",

@@ -1,12 +1,16 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text } from 'react-native-elements';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { Text } from "react-native-elements";
 
-const MemberFields = ({ labelText, fieldValue }) => {
+const MemberFields = ({ labelText, fieldValue, fieldTestId }) => {
   return (
     <View>
-      <Text style={styles.label}>{labelText}</Text>
-      <Text style={styles.field}>{fieldValue}</Text>
+      <Text style={styles.label} testID={`memberFieldLabel-${fieldTestId}`}>
+        {labelText}
+      </Text>
+      <Text style={styles.field} testID={`memberFieldValue-${fieldTestId}`}>
+        {fieldValue}
+      </Text>
     </View>
   );
 };
@@ -21,7 +25,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderWidth: 1,
     marginBottom: 15,
-    backgroundColor: '#D2D0D0',
+    backgroundColor: "#D2D0D0",
     padding: 10,
     margin: 5,
   },

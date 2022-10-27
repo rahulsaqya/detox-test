@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
-import { Button } from 'react-native-elements';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import MemberFormInputFields from './MemberFormInputFields';
-import moment from 'moment';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, { useState } from "react";
+import { View } from "react-native";
+import { Button } from "react-native-elements";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import MemberFormInputFields from "./MemberFormInputFields";
+import moment from "moment";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const MemberFormTimeFields = ({
   labelAndPlaceholder,
@@ -13,14 +13,15 @@ const MemberFormTimeFields = ({
   isFailingValidation,
   errorMessage,
   isInError,
+  formTestId,
 }) => {
-  const [time, setTime] = useState(inputValue || '');
+  const [time, setTime] = useState(inputValue || "");
   const [show, setShow] = useState(false);
   const [lastTime, setLastTime] = useState(inputValue || new Date());
 
   const onChange = (event, selectedTime) => {
     const currentTime = selectedTime || time;
-    setShow(Platform.OS === 'ios');
+    setShow(Platform.OS === "ios");
     setTime(currentTime);
     setLastTime(currentTime);
     inputChangeText(currentTime);
@@ -45,10 +46,11 @@ const MemberFormTimeFields = ({
         <MemberFormInputFields
           labelAndPlaceholder={labelAndPlaceholder}
           editableStatus={false}
-          inputValue={time ? moment(time).format('HH:mm') : ''}
+          inputValue={time ? moment(time).format("HH:mm") : ""}
           isFailingValidation={isFailingValidation}
           errorMessage={errorMessage}
           isInError={isInError}
+          formTestId={formTestId}
         />
       </TouchableOpacity>
       {show && (
@@ -59,18 +61,21 @@ const MemberFormTimeFields = ({
             is24Hour={true}
             display="spinner"
             onChange={onChange}
+            testID={`formDatePicker-${formTestId}`}
           />
-          {Platform.OS === 'ios' && (
+          {Platform.OS === "ios" && (
             <View>
               <Button
-                style={{margin: 5}}
+                style={{ margin: 5 }}
                 title="Confirm"
                 onPress={() => onConfirm(lastTime)}
+                testID="confirmPickerButton"
               />
               <Button
-                style={{margin: 5, paddingBottom: 10}}
+                style={{ margin: 5, paddingBottom: 10 }}
                 title="Cancel"
                 onPress={() => cancelChange()}
+                testID="cancelPickerButton"
               />
             </View>
           )}

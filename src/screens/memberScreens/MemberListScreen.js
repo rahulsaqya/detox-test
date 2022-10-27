@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from "react";
 import {
   FlatList,
   SafeAreaView,
@@ -6,11 +6,11 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import MemberContext from '../../context/MemberContext';
-import ConfirmModal from '../../components/modalComponents/ConfirmModal';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+} from "react-native";
+import MemberContext from "../../context/MemberContext";
+import ConfirmModal from "../../components/modalComponents/ConfirmModal";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 const MemberListScreen = ({ navigation }) => {
   const { data, getMembers, deleteMember } = useContext(MemberContext);
@@ -18,7 +18,7 @@ const MemberListScreen = ({ navigation }) => {
 
   useEffect(() => {
     getMembers();
-    const listener = navigation.addListener('didFocus', () => {
+    const listener = navigation.addListener("didFocus", () => {
       getMembers();
       setModal(false);
     });
@@ -44,20 +44,34 @@ const MemberListScreen = ({ navigation }) => {
     <FlatList
       data={data}
       keyExtractor={(member) => `${member.id}`}
-      renderItem={({item}) => {
+      renderItem={({ item, index }) => {
         return (
           <View>
             <TouchableOpacity
-              onPress={() => navigation.navigate('ShowMember', {id: item.id})}>
+              onPress={() => navigation.navigate("ShowMember", { id: item.id })}
+              testID={`member-${index}`}
+            >
               <View style={styles.row}>
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={{fontSize: 20}}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{ fontSize: 20 }}
+                    testID={`memberFullName-${index}`}
+                  >
                     {item.name} {item.surname} -
                   </Text>
-                  <Text style={{fontSize: 20, paddingLeft: 5}}>{item.id}</Text>
+                  <Text
+                    style={{ fontSize: 20, paddingLeft: 5 }}
+                    testID={`memberId-${index}`}
+                  >
+                    {item.id}
+                  </Text>
                 </View>
                 <TouchableOpacity onPress={() => setModal(true)}>
-                  <FontAwesome5 style={{fontSize: 25}} name="trash" />
+                  <FontAwesome5
+                    style={{ fontSize: 25 }}
+                    name="trash"
+                    testID={`memberDelete-${index}`}
+                  />
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
@@ -81,7 +95,7 @@ const MemberListScreen = ({ navigation }) => {
       {data && data.length ? (
         renderList()
       ) : (
-        <Text>No Members added in the list</Text>
+        <Text testID="noResultsText">No Members added in the list</Text>
       )}
     </SafeAreaView>
   );
@@ -89,21 +103,27 @@ const MemberListScreen = ({ navigation }) => {
 
 MemberListScreen.navigationOptions = ({ navigation }) => {
   return {
-    headerTitle: 'Members',
-    headerTitleAlign: 'center',
+    headerTitle: () => <Text testID="memberListHeader">Members</Text>,
+    headerTitleAlign: "center",
     headerRight: () => (
-      <TouchableOpacity onPress={() => navigation.navigate('AddMember')}>
-        <AntDesign style={{paddingRight: 15}} name="pluscircle" size={25} />
+      <TouchableOpacity onPress={() => navigation.navigate("AddMember")}>
+        <AntDesign
+          style={{ paddingRight: 15 }}
+          name="pluscircle"
+          size={25}
+          testID="addMemberIcon"
+          accessibilityLabel="addMemberLabel"
+        />
       </TouchableOpacity>
-    )
+    ),
   };
 };
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderColor: 'gray',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderColor: "gray",
     paddingVertical: 25,
     paddingHorizontal: 15,
     borderTopWidth: 2,

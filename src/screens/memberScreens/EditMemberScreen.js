@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
-import MemberContext from '../../context/MemberContext';
-import MemberForm from '../../components/memberComponents/MemberForm';
+import React, { useContext } from "react";
+import MemberContext from "../../context/MemberContext";
+import MemberForm from "../../components/memberComponents/MemberForm";
+import { Text } from "react-native";
 
 const EditMemberScreen = ({ navigation }) => {
-  const id = navigation.getParam('id');
+  const id = navigation.getParam("id");
   const { data, editMember } = useContext(MemberContext);
 
   const member = data.find((member) => member.id === id);
@@ -32,11 +33,13 @@ const EditMemberScreen = ({ navigation }) => {
 };
 
 EditMemberScreen.navigationOptions = ({ navigation }) => {
-  const id = navigation.getParam('id');
+  const id = navigation.getParam("id");
 
   return {
-    headerTitle: `Edit Member ${id}`,
-    headerTitleAlign: 'center',
+    headerTitle: () => (
+      <Text testID={`editMemberHeader`}>Edit Member ${id}</Text>
+    ),
+    headerTitleAlign: "center",
   };
 };
 

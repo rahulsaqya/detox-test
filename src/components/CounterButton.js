@@ -1,16 +1,26 @@
-import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import React from "react";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-export default CounterButton = ({ text, onPress, counter }) => {
+export default CounterButton = ({
+  text,
+  onPress,
+  counter,
+  testID,
+  ...props
+}) => {
   return (
     <View style={styles.view}>
-      <TouchableOpacity onPress={onPress}>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>{text}</Text>
+      <TouchableOpacity onPress={onPress} {...props}>
+        <View style={styles.button} testID="counterButton">
+          <Text style={styles.buttonText} testID={`counterText-${testID}`}>
+            {text}
+          </Text>
         </View>
       </TouchableOpacity>
       <View>
-        <Text style={styles.text}>{counter}</Text>
+        <Text style={styles.text} testID={`counterNumber-${testID}`}>
+          {counter}
+        </Text>
       </View>
     </View>
   );
@@ -27,20 +37,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 150,
     width: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#76D13B',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#76D13B",
   },
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
+    color: "white",
+    fontWeight: "bold",
+    textTransform: "uppercase",
     fontSize: 16,
-    justifyContent: 'center',
-    textAlign: 'center',
+    justifyContent: "center",
+    textAlign: "center",
   },
   text: {
     fontSize: 60,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
 });
